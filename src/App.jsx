@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+
 import Home from "./components/home/Page";
 import Header from "./components/header/Header";
 import About from "./components/about/Page";
@@ -9,31 +10,26 @@ import Signup from "./components/signup/Page";
 function App() {
   const [employee, setEmployee] = useState({});
   const [list, setList] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [editId, setEditId] = useState(null);
-  const [mount, setMount] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
   const [errors, setErrors] = useState({});
-  const [newList, setNewList] = useState([]);
+  const [isAuth, setIsAuth] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    let savedList = JSON.parse(localStorage.getItem("list")) || [];
-    setList(savedList);
-    setNewList(savedList);
-    setMount(true);
+    const saved = JSON.parse(localStorage.getItem("list")) || [];
+    setList(saved);
+    setFiltered(saved);
   }, []);
 
   useEffect(() => {
-    if (mount) {
-      localStorage.setItem("list", JSON.stringify(list));
-    }
-  }, [list, mount]);
+    localStorage.setItem("list", JSON.stringify(list));
+  }, [list]);
 
   useEffect(() => {
-    const auth = localStorage.getItem("auth");
-    if (auth === "true") {
-      setIsAuth(true);
-    }
+    const auth = localStorage.getItem("auth") === "true";
+    setIsAuth(auth);
   }, []);
 
   const handleChange = (e) => {
@@ -42,18 +38,15 @@ function App() {
   };
 
   const validateForm = () => {
-    let newErrors = {};
+    let errs = {};
 
-    if (!employee.ename?.trim()) newErrors.ename = "Employee Name is required.";
-    if (!employee.email?.trim())
-      newErrors.email = "Employee Email is required.";
-    if (!employee.department?.trim())
-      newErrors.department = "Department is required.";
-    if (!employee.salary?.toString().trim())
-      newErrors.salary = "Salary is required.";
+    if (!employee.ename?.trim()) errs.ename = "Employee Name is required";
+    if (!employee.email?.trim()) errs.email = "Employee Email is required";
+    if (!employee.department?.trim()) errs.department = "Department is required";
+    if (!employee.salary?.toString().trim()) errs.salary = "Salary is required";
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
   };
 
   const handleSubmit = (e) => {
@@ -63,15 +56,15 @@ function App() {
 
     if (!editId) {
       const newRecord = { ...employee, id: Date.now() };
-      const updatedList = [...list, newRecord];
-      setList(updatedList);
-      setNewList(updatedList);
+      const updated = [...list, newRecord];
+      setList(updated);
+      setFiltered(updated);
     } else {
-      let updated = list.map((val) =>
-        val.id === editId ? { ...val, ...employee } : val
+      const updated = list.map((item) =>
+        item.id === editId ? { ...item, ...employee } : item
       );
       setList(updated);
-      setNewList(updated);
+      setFiltered(updated);
       navigate("/about");
     }
 
@@ -80,38 +73,40 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    let updated = list.filter((val) => val.id !== id);
+    const updated = list.filter((item) => item.id !== id);
     setList(updated);
-    setNewList(updated);
+    setFiltered(updated);
   };
 
   const handleEdit = (id) => {
-    let data = list.find((val) => val.id === id);
-    setEmployee(data);
+    const record = list.find((item) => item.id === id);
+    setEmployee(record);
     setEditId(id);
     navigate("/");
   };
 
   const handleSearch = (e) => {
-    let value = e.target.value.toLowerCase();
-    if (!value.trim()) return setNewList(list);
-    let filtered = list.filter((item) =>
+    const value = e.target.value.toLowerCase();
+    if (!value.trim()) return setFiltered(list);
+
+    const filteredList = list.filter((item) =>
       item.ename.toLowerCase().includes(value)
     );
-    setNewList(filtered);
+    setFiltered(filteredList);
   };
 
   const handleLogout = () => {
-    setIsAuth(false);
     localStorage.removeItem("auth");
     localStorage.removeItem("currentUser");
+    setIsAuth(false);
     navigate("/");
   };
-  
+
   if (isAuth) {
     return (
       <>
         <Header logout={handleLogout} handleSearch={handleSearch} />
+
         <Routes>
           <Route
             index
@@ -133,7 +128,7 @@ function App() {
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
                 list={list}
-                newList={newList}
+                newList={filtered}
               />
             }
           />
@@ -147,11 +142,8 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Login setIsAuth={setIsAuth} navigate={navigate} />} />
       <Route path="/signup" element={<Signup navigate={navigate} />} />
-      <Route
-        path="/"
-        element={<Login setIsAuth={setIsAuth} navigate={navigate} />}
-      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
