@@ -1,3 +1,3 @@
 # Deploy Link:-
 
-- Link: 
+- Link: https://react-data-table-pr.vercel.app/
