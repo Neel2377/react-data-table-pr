@@ -1,0 +1,129 @@
+/* Background */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #03355b;
+  background-size: 250% 250%;
+  animation: bgFlow 12s ease-in-out infinite;
+}
+
+@keyframes bgFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Login Card */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.7s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Title */
+.login-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1b2c66;
+  margin-bottom: 24px;
+}
+
+/* Form input group */
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+  color: #1d2b4a;
+  font-weight: 500;
+}
+
+/* Inputs */
+.input-box {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid rgba(50, 86, 212, 0.3);
+  border-radius: 10px;
+  font-size: 15px;
+  background: #ffffff;
+  transition: all 0.25s ease;
+}
+
+.input-box:focus {
+  border-color: #3256d4;
+  box-shadow: 0 0 6px rgba(50,86,212,0.35);
+  outline: none;
+}
+
+/* Error input */
+.input-error {
+  border-color: #d9534f !important;
+  box-shadow: 0 0 5px rgba(217,83,79,0.4) !important;
+}
+
+/* Error text */
+.error-text {
+  font-size: 13px;
+  color: #d9534f;
+  margin-top: 4px;
+}
+
+/* Login button */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #1b2c66;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+  background: #29408c;
+  transform: translateY(-2px);
+}
+
+.login-btn:active {
+  transform: scale(0.97);
+}
+
+/* Signup link text */
+.signup-text {
+  text-align: center;
+  margin-top: 16px;
+  color: #1d2b4a;
+}
+
+.signup-link {
+  margin-left: 4px;
+  color: #1b2c66;
+  font-weight: 700;
+  text-decoration: underline;
+}

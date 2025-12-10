@@ -1,0 +1,145 @@
+/* Navbar Container */
+.navbar-container {
+  width: 100%;
+  background: #29408c;
+
+  padding: 14px 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+/* Inner Content Wrapper */
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Brand / Logo */
+.brand {
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.brand:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* Navbar Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.link {
+  font-size: 16px;
+  font-weight: 500;
+  color: #e7ecff;
+  text-decoration: none;
+  padding-bottom: 3px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.link:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.link.active {
+  color: #02ff70;
+  font-weight: 700;
+  border-bottom: 2px solid #ffffff;
+}
+
+/* Right Side: Search + Logout */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Search Input */
+.search {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+
+  font-size: 14px;
+  width: 180px;
+
+  transition: all 0.25s ease;
+  outline: none;
+
+  background: rgba(255,255,255,0.85);
+  color: #1b2c66;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.search:focus {
+  box-shadow: 0 0 8px rgba(255,255,255,0.55);
+}
+
+.search:disabled {
+  background: rgba(255,255,255,0.5);
+  cursor: not-allowed;
+}
+
+/* Logout Button */
+.logout-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #ffffff;
+  color: #1b2c66;
+  border: 1px solid;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.logout-btn:hover {
+  background: #ff5252;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.logout-btn:active {
+  transform: scale(0.96);
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .inner {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .search {
+    width: 100%;
+    max-width: 240px;
+  }
+}
